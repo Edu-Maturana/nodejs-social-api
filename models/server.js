@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 
-const { dbConnection } = require('../database/config');
+const { MongoDBConnection } = require('../database/config');
 
 class Server {
 
@@ -24,7 +24,7 @@ class Server {
     }
 
     async connectToDatabase() {
-        await dbConnection();
+        await MongoDBConnection();
     }
 
     middlewares() {
