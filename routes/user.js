@@ -39,7 +39,7 @@ router.post(
       min: 6,
     }),
     check("email").custom(emailExists),
-    check("role").isIn(["USER", "ADMIN"]),
+    check("role").custom(isValidRole),
     validateFields,
   ],
   createUser

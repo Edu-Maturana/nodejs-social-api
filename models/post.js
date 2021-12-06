@@ -1,9 +1,9 @@
 const {Schema, model} = require('mongoose');
 
 const PostSchema = new Schema({
-    body: {
+    content: {
         type: String,
-        required: [true, 'Body is required']
+        required: [true, 'Content is required']
     },
     user: {
         type: Schema.Types.ObjectId,
@@ -21,7 +21,12 @@ const PostSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    state: {
+        type: Boolean,
+        default: true
     }
+
 });
 
 module.exports = model('Post', PostSchema);
