@@ -20,7 +20,7 @@ class Server {
 
         this.middlewares();
 
-        this.routes();
+       // this.routes();
     }
 
     async connectToDatabase() {
@@ -37,17 +37,17 @@ class Server {
 
     }
 
-    routes() {
+    // routes() {
         
-        this.app.use( this.paths.auth, require('../routes/auth'));
-        this.app.use( this.paths.search, require('../routes/search'));
-        this.app.use( this.paths.posts, require('../routes/posts'));
-        this.app.use( this.paths.users, require('../routes/users'));
-    }
+    //     this.app.use( this.paths.auth, require('../routes/auth'));
+    //     this.app.use( this.paths.search, require('../routes/search'));
+    //     this.app.use( this.paths.posts, require('../routes/posts'));
+    //     this.app.use( this.paths.users, require('../routes/users'));
+    // }
 
     listen() {
         this.app.listen( this.port, () => {
-            console.log('Servidor running on: ', this.port );
+            console.log('Server running - Port:', this.port);
         });
     }
 
