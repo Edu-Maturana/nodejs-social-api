@@ -13,14 +13,14 @@ class Server {
             auth:       '/api/auth',
             search:     '/api/search',
             posts:  '/api/posts',
-            users:   '/api/users',
+            user:   '/api/user',
         }
 
         this.connectToDatabase();
 
         this.middlewares();
 
-       // this.routes();
+        this.routes();
     }
 
     async connectToDatabase() {
@@ -37,13 +37,13 @@ class Server {
 
     }
 
-    // routes() {
+    routes() {
         
-    //     this.app.use( this.paths.auth, require('../routes/auth'));
+    this.app.use( this.paths.auth, require('../routes/auth'));
+    this.app.use( this.paths.user, require('../routes/user'));
     //     this.app.use( this.paths.search, require('../routes/search'));
     //     this.app.use( this.paths.posts, require('../routes/posts'));
-    //     this.app.use( this.paths.users, require('../routes/users'));
-    // }
+    }
 
     listen() {
         this.app.listen( this.port, () => {

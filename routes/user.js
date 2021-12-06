@@ -39,7 +39,7 @@ router.post(
       min: 6,
     }),
     check("email").custom(emailExists),
-    check("role").custom(isValidRole),
+    check("role").isIn(["USER", "ADMIN"]),
     validateFields,
   ],
   createUser
@@ -61,7 +61,7 @@ router.delete(
   "/:id",
   [
     validateJWT,
-    hasRole(["ADMIN_ROLE", "USER_ROLE"]),
+    hasRole(["ADMIN", "USER"]),
     check("id", "Id not valid").isMongoId(),
     check("id").custom(userExists),
   ],
