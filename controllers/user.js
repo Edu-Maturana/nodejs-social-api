@@ -21,6 +21,23 @@ const readUsers = async (req, res) => {
     });
 }
 
+const readUser = async (req, res = response) => {
+    const userId = req.params.id;
+    const user = await User.findById(userId);
+
+    if (!user) {
+        return res.status(404).json({
+            ok: false,
+            msg: 'User not found'
+        });
+    }
+
+    res.json({
+        ok: true,
+        user
+    });
+}
+
 const createUser = async (req, res = response) => {
     const {name, email, password, role} = req.body;
     const user = new User({name, email, password, role});
@@ -67,6 +84,7 @@ const deleteUser = async (req, res = response) => {
 
 module.exports = {
     readUsers,
+    readUser,
     createUser,
     updateUser,
     deleteUser
