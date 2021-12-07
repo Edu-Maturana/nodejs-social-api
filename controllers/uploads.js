@@ -5,6 +5,7 @@ cloudinary.config(process.env.CLOUDINARY_URL);
 const defaultImage = require('../assets/default-image');
 
 const User = require('../models/user');
+const validExtensions = ['png', 'jpg', 'jpeg'];
 
 const changeAvatar = async (req, res = response) => {
     const {id} = req.params;
@@ -41,6 +42,16 @@ const changeAvatar = async (req, res = response) => {
     }
     
     const {tempFilePath} = req.files.avatar;
+    // Validate extension
+    const extension = tempFilePath.split('.').pop();
+
+    if (!validExtensions.includes(extension)) {
+        return res.status(400).json({
+            ok: false,
+            msg: 'Invalid extension'
+        });
+    }
+
     const {secure_url} = await cloudinary.uploader.upload(tempFilePath);
     
     user.avatar = secure_url;
