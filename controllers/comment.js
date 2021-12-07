@@ -3,7 +3,6 @@ const { response, request } = require("express");
 const { Comment, Post } = require("../models");
 
 const readCommentsByPost = async (req, res = response) => {
-    // Get the post id from the url
     const { id } = req.params;
 
     const post = await Post.findById(id);
@@ -16,11 +15,7 @@ const readCommentsByPost = async (req, res = response) => {
     }
 
     // Find all the comments from the post
-    const comments = await Comment.findAll({
-        where: {
-            post: id
-        }
-    });
+    const comments = await Comment.find({ post: id }).populate("user", "name");
 
     // Send the comments as a response
     res.json({
@@ -61,6 +56,7 @@ const createComment = async (req, res = response) => {
 }
 
 const updateComment = async (req, res = response) => {
+    const user = req.user.id;
     const { text } = req.body;
     const { id } = req.params;
 
@@ -69,6 +65,11 @@ const updateComment = async (req, res = response) => {
 
         if (!comment) {
             return res.status(404).json({ msg: "Comment not found" });
+        }
+
+        // Check if the user is the owner of the comment
+        if (comment.user.toString() !== user) {
+            return res.status(401).json({ msg: "User not authorized" });
         }
 
         comment.text = text;
@@ -83,6 +84,7 @@ const updateComment = async (req, res = response) => {
 }
 
 const deleteComment = async (req, res = response) => {
+    const user = req.user.id;
     const { id } = req.params;
 
     try {
@@ -90,6 +92,11 @@ const deleteComment = async (req, res = response) => {
 
         if (!comment) {
             return res.status(404).json({ msg: "Comment not found" });
+        }
+
+        // Check if the user is the owner of the comment
+        if (comment.user.toString() !== user) {
+            return res.status(401).json({ msg: "User not authorized" });
         }
 
         await comment.remove();

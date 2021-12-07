@@ -15,14 +15,6 @@ const UserSchema = new Schema({
         type: String,
         required: [true, 'Password is required'],
     },
-    followed: [{
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    }],
-    following: [{
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    }],
     avatar: {
         type: String,
         default: defaultImage

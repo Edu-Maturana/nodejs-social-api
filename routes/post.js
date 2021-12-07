@@ -7,6 +7,7 @@ const {
   createPost,
   readPosts,
   readPost,
+  readPostsByUser,
   updatePost,
   deletePost,
 } = require("../controllers/post");
@@ -14,6 +15,7 @@ const router = Router();
 
 router.get("/", readPosts);
 router.get("/:id", readPost);
+router.get("/user/:id", readPostsByUser);
 
 router.post(
   "/",
