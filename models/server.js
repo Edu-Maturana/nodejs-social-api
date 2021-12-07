@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const fileUpload = require('express-fileupload');
 
 const { MongoDBConnection } = require('../database/config');
 
@@ -12,9 +13,9 @@ class Server {
         this.paths = {
             auth:       '/api/auth',
             search:     '/api/search',
-            post:  '/api/post',
-            user:   '/api/user',
-            comment: '/api/comment',
+            post:       '/api/post',
+            user:       '/api/user',
+            comment:    '/api/comment',
         }
 
         this.connectToDatabase();
@@ -22,20 +23,26 @@ class Server {
         this.middlewares();
 
         this.routes();
-    }
 
+    }
+    
     async connectToDatabase() {
         await MongoDBConnection();
     }
-
+    
     middlewares() {
-
+        
         // CORS
         this.app.use( cors() );
-
+        
         // Lectura y parseo del body
         this.app.use( express.json() );
-
+        
+        this.app.use(fileUpload({
+            useTempFiles : true,
+            tempFileDir : '/tmp/',
+            createParentPath: true
+        }));
     }
 
     routes() {
