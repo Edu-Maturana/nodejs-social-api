@@ -14,6 +14,7 @@ class Server {
             search:     '/api/search',
             post:  '/api/post',
             user:   '/api/user',
+            comment: '/api/comment',
         }
 
         this.connectToDatabase();
@@ -42,7 +43,8 @@ class Server {
     this.app.use( this.paths.auth, require('../routes/auth'));
     this.app.use( this.paths.user, require('../routes/user'));
     this.app.use( this.paths.post, require('../routes/post'));
-    //     this.app.use( this.paths.search, require('../routes/search'));
+    this.app.use( this.paths.comment, require('../routes/comment'));
+   // this.app.use( this.paths.search, require('../routes/search'));
     }
 
     listen() {

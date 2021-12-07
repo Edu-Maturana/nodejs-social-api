@@ -1,9 +1,9 @@
 const {Schema, model} = require('mongoose');
 
 const PostSchema = new Schema({
-    content: {
+    text: {
         type: String,
-        required: [true, 'Content is required']
+        required: [true, 'Text is required']
     },
     user: {
         type: Schema.Types.ObjectId,
@@ -13,10 +13,6 @@ const PostSchema = new Schema({
     comments: [{
         type: Schema.Types.ObjectId,
         ref: 'Comment'
-    }],
-    likes: [{
-        type: Schema.Types.ObjectId,
-        ref: 'User'
     }],
     createdAt: {
         type: Date,
@@ -28,5 +24,10 @@ const PostSchema = new Schema({
     }
 
 });
+
+PostSchema.methods.toJSON = function() {
+    const { __v, comments, ...post} = this.toObject();
+    return post;
+}
 
 module.exports = model('Post', PostSchema);

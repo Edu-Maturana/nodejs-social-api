@@ -18,7 +18,7 @@ router.get("/:id", readPost);
 router.post(
   "/",
   [
-    check("content", "Content is required").not().isEmpty(),
+    check("text", "Text is required").not().isEmpty(),
     validateFields,
     validateJWT,
   ],

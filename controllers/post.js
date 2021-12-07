@@ -3,12 +3,11 @@ const { request, response } = require("express");
 const Post = require("../models/post");
 
 const createPost = async (req, res) => {
-    const {content} = req.body;
+    const {text} = req.body;
 
     const post = new Post({
-        content,
+        text,
         user: req.user._id,
-        comments: []
     });
 
     // save post
@@ -27,7 +26,7 @@ const readPosts = async (req, res) => {
     const [total, posts] = await Promise.all([
         Post.countDocuments(query),
         Post.find(query).sort({createdAt: -1}).skip(Number(from)).limit(Number(limit))
-            .populate("user", "name avatar")
+            .populate("user", "name")
     ]);
 
     res.json({
@@ -49,7 +48,7 @@ const readPost = async (req, res) => {
 
 const updatePost = async (req, res) => {
     const {id} = req.params;
-    const {content} = req.body;
+    const {content, ...rest} = req.body;
 
     const query = {_id: id, state: true};
 

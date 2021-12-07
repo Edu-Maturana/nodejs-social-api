@@ -15,6 +15,10 @@ const CommentSchema = new Schema({
         ref: 'Post',
         required: [true, 'Post is required']
     },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 module.exports = model('Comment', CommentSchema);
