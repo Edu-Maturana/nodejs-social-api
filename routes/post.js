@@ -30,7 +30,7 @@ router.post(
 router.put(
     "/:id",
     [
-        check("content", "Content is required").not().isEmpty(),
+        check("text", "Text is required").not().isEmpty(),
         validateFields,
         validateJWT,
     ],

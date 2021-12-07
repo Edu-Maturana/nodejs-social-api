@@ -28,8 +28,6 @@ router.get("/:id", readUser);
 router.post(
   "/",
   [
-    validateJWT,
-    hasRole("USER"),
     check("name", "Name is required").not().isEmpty(),
     check("email", "Email not valid").isEmail(),
     check("password", "Password is required").not().isEmpty(),

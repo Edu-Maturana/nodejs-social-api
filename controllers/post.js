@@ -65,7 +65,7 @@ const readPost = async (req, res) => {
 const updatePost = async (req, res) => {
     const user = req.user._id;
     const {id} = req.params;
-    const {content, ...rest} = req.body;
+    const {text} = req.body;
 
     // Verify if the user is the owner of the post
     const post = await Post.findOne({_id: id, user});
@@ -78,7 +78,7 @@ const updatePost = async (req, res) => {
 
     const query = {_id: id, state: true};
 
-    const postUpdated = await Post.findOneAndUpdate(query, {content}, {new: true});
+    const postUpdated = await Post.findOneAndUpdate(query, {text}, {new: true});
 
     res.json({
         message: "Post updated successfully",
