@@ -14,10 +14,6 @@ const PostSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Comment'
     }],
-    img: {
-        type: String,
-        default: ''
-    },
     createdAt: {
         type: Date,
         default: Date.now
