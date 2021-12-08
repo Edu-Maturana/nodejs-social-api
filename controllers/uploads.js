@@ -5,7 +5,7 @@ cloudinary.config(process.env.CLOUDINARY_URL);
 const defaultImage = require('../assets/default-image');
 
 const User = require('../models/user');
-const validExtensions = ['png', 'jpg', 'jpeg'];
+const validExtensions = ['jpg', 'png', 'jpeg'];
 
 const changeAvatar = async (req, res = response) => {
     const {id} = req.params;
@@ -42,8 +42,9 @@ const changeAvatar = async (req, res = response) => {
     }
     
     const {tempFilePath} = req.files.avatar;
+    const fileName = req.files.avatar.name;
     // Validate extension
-    const extension = tempFilePath.split('.').pop();
+    const extension = fileName.split('.')[1];
 
     if (!validExtensions.includes(extension)) {
         return res.status(400).json({
